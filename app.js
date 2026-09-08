@@ -7,16 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var increaseSizeInterval;
 
-    function triggerJumpscare() {
-        container.style.display = 'block';
-
-        // play both sounds together
-        audio1.currentTime = 0;
-        audio2.currentTime = 0;
-        audio1.play().catch(function (e) { console.log('audio1 blocked:', e); });
-        audio2.play().catch(function (e) { console.log('audio2 blocked:', e); });
-
-        // gradually grow the image
+    function growImage() {
         var currentSize = 150; // starting scale %
         var maxSize = 400;     // max scale %
         var increaseRate = 6;  // % per tick
@@ -32,8 +23,26 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 60);
     }
 
-    enterScreen.addEventListener('click', function () {
-        enterScreen.style.display = 'none';
-        triggerJumpscare();
-    }, { once: true });
+    function playSounds() {
+        audio1.currentTime = 0;
+        audio2.currentTime = 0;
+        return Promise.all([audio1.play(), audio2.play()]);
+    }
+
+    function triggerJumpscare() {
+        container.style.display = 'block';
+        growImage();
+    }
+
+    // Try to autoplay with sound immediately on load.
+    triggerJumpscare();
+    playSounds().catch(function () {
+        // Browser blocked audio autoplay - needs one tap/click to unlock sound.
+        enterScreen.style.display = 'flex';
+        enterScreen.textContent = 'Tap for sound';
+        enterScreen.addEventListener('click', function () {
+            enterScreen.style.display = 'none';
+            playSounds().catch(function (e) { console.log('audio still blocked:', e); });
+        }, { once: true });
+    });
 });

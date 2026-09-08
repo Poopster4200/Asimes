@@ -23,7 +23,7 @@ body {
     inset: 0;
     background: #000;
     color: #eee;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
