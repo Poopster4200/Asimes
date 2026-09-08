@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click to continue</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container">
+
+        <!-- Cover screen: browsers block autoplay-with-sound until a click happens -->
+        <div class="enter-screen" id="enterScreen">
+            <p>Click anywhere to continue</p>
+        </div>
+
+        <div class="document-container" id="documentContainer">
+            <img class="document-image" id="documentImage" src="sara.png">
+        </div>
+
+        <audio id="scareAudio1" src="jumpscare1.ogg" preload="auto"></audio>
+        <audio id="scareAudio2" src="jumpscare2.ogg" preload="auto"></audio>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+</html>
